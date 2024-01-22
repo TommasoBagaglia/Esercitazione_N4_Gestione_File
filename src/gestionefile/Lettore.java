@@ -5,12 +5,12 @@ import java.io.IOException;
 
 /**
  *
- * @author MC
- * @ 12/01/23
+ * @author TB
+ * @ 16/01/24
  */
 
 public class Lettore extends Thread{
-    String nomeFile;
+    private String nomeFile;
     
     public Lettore(String nomeFile){
         this.nomeFile = nomeFile;
