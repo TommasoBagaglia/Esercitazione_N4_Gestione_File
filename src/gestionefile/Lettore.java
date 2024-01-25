@@ -1,12 +1,14 @@
 package gestionefile;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Scanner;
+import java.io.*;
 
 /**
  *
  * @author TB
- * @ 16/01/24
+ * @ 25/01/24
  */
 
 public class Lettore extends Thread{
