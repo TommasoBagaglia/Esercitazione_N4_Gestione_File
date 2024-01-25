@@ -6,7 +6,7 @@ import java.io.*;
 /**
  *
  * @author TB
- * @version 16/01/24
+ * @version 25/01/24
  */
 public class GestioneFile {
     /**
@@ -14,27 +14,43 @@ public class GestioneFile {
      */
     public static void main(String[] args) {
        
-        //1)LETTURA
+         //1) LETTURA
         Lettore lettore = new Lettore("user.json");
         lettore.start();
-        //2)ELABORAZIONE
-        Scanner scan = new Scanner(System.in);// creazione dell oggetto scan
-        System.out.println("inserisci nome"); // rischesta in input del nome all'utente
-        String username = scan.nextLine();// lettura del nome dal input
-        
-        System.out.println("inserisci password");// rischesta in input della password all'utente
-        String password = scan.nextLine();// lettura del password dal input 
-        
-        
-        String CPassword = CPassword(password);// cifratura della passaword con il cifrario di vigénere
+
+        //2) ELABORAZIONE
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Inserisci nome:");
+        String username = scan.nextLine();
+        System.out.println("Inserisci password:");
+        String password = scan.nextLine();
+        String encryptedPassword = CPassword(password);
+
         //3) SCRITTURA
         Scrittore scrittore = new Scrittore("output.csv");
-        Thread threadScrittore =  new Thread(() -> scrittore.run(username, CPassword));
+        Thread threadScrittore =  new Thread(() -> scrittore.run(username, encryptedPassword));
         threadScrittore.start();
-        
+
         //4) COPIA DEL FILE 
-        scrittore.copia(); 
-        
+        scrittore.copia();
+
+        //5) GESTIONE FILE CON SERIALIZZAZIONE
+        // Utilizzo della classe DataInputStream per leggere oggetti User
+        try (DataInputStream dis = new DataInputStream(new FileInputStream("user.dat"))) {
+            User user = User.readFromStream(dis);
+            System.out.println("User letto: " + user.getName() + ", " + user.getPassword());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        // Utilizzo della classe DataOutputStream per scrivere oggetti User
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream("user.dat"))) {
+            User newUser = new User(username, encryptedPassword);
+            newUser.writeToStream(dos);
+            System.out.println("User scritto: " + newUser.getName() + ", " + newUser.getPassword());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
     //codice del cifrario di Vigénere
     private static String CPassword(String password){
