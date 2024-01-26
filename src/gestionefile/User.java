@@ -2,7 +2,7 @@
 package gestionefile;
 /**
  *
- * @author TB
+ * @author Tommaso Bagaglia
  * @version 25/01/24
  */
 import java.io.*;

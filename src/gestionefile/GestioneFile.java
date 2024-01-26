@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.*;
 /**
  *
- * @author TB
+ * @author Tommaso Bagaglia
  * @version 25/01/24
  */
 public class GestioneFile {
@@ -28,7 +28,7 @@ public class GestioneFile {
 
         //3) SCRITTURA
         Scrittore scrittore = new Scrittore("output.csv");
-        Thread threadScrittore =  new Thread(() -> scrittore.run(username, encryptedPassword));
+        Thread threadScrittore =  new Thread(() -> scrittore.run(username, encryptedPassword)); // ho utilizzato la lamdba expression per non creare un altro metodo
         threadScrittore.start();
 
         //4) COPIA DEL FILE 
