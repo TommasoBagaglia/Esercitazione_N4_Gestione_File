@@ -13,7 +13,9 @@ public class GestioneFile {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
+        String username; 
+        String CPassword;
+
          //1) LETTURA
         Lettore lettore = new Lettore("user.json");
         lettore.start();
@@ -21,14 +23,39 @@ public class GestioneFile {
         //2) ELABORAZIONE
         Scanner scan = new Scanner(System.in);
         System.out.println("Inserisci nome:");
+        //gestione delle eccezioni 
+        try {
         String username = scan.nextLine();
+
         System.out.println("Inserisci password:");
         String password = scan.nextLine();
-        String encryptedPassword = CPassword(password);
+
+        // Verifica se la password è vuota o contiene solo spazi
+        if (password.trim().isEmpty()) {
+          throw new IllegalArgumentException("La password non può essere vuota");
+        }
+
+        String CPassword = CPassword(password);
+
+        } catch (Exception e) {
+        //stampa di un messaggio di errore
+       System.err.println("Errore durante l'elaborazione delle credenziali: " + e.getMessage());
+       }
 
         //3) SCRITTURA
+        // ho utilizzato la lamdba expression per semplificare la sintassi e migliorare la leggibilità del codice.
+        // Le espressioni lambda sono una caratteristica introdotta in Java 8 che consente di scrivere in modo più conciso le funzioni anonime.
         Scrittore scrittore = new Scrittore("output.csv");
-        Thread threadScrittore =  new Thread(() -> scrittore.run(username, encryptedPassword)); // ho utilizzato la lamdba expression per non creare un altro metodo
+
+        Thread threadScrittore = new Thread(() -> {
+        try {
+        scrittore.run(username, CPassword);
+        } catch (IOException e) {
+        // Gestistione dell'eccezione di IO in modo appropriato stampando un messaggio di errore
+        System.err.println("Errore durante la scrittura su file CSV: " + e.getMessage());
+        }
+        });
+
         threadScrittore.start();
 
         //4) COPIA DEL FILE 
