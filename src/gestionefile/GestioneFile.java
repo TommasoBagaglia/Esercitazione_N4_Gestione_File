@@ -101,6 +101,19 @@ public class GestioneFile {
         // Restituisce la nuova password cifrata come stringa
         return CPassword.toString();
     }
+     public void copia() {
+        try {
+            // path serve  rappresentare percorsi di file o directory nel sistema file
+            Path sourcePath = Paths.get(nomeFile);
+            Path destinationPath = Paths.get("copia.csv");
+
+            Files.copy(sourcePath, destinationPath);
+
+            System.out.println("File copiato con successo.");
+        } catch (IOException e) {
+            System.err.println("Errore durante la copia del file: " + e.getMessage());
+        }
+    }
   }
     
 

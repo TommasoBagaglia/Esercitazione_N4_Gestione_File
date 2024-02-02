@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import java.io.*;
 
-
 /**
  *
  * @author Tommaso Bagaglia
@@ -84,7 +83,6 @@ public class Scrittore implements Runnable{
         }
     }
 
-  
     @Override
     public void run() {
         scrivi();
