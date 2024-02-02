@@ -3,12 +3,14 @@ package gestionefile;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import java.io.*;
 
 /**
  *
  * @author Tommaso Bagaglia
- * @version 25/01/24
+ * @version 2/02/24
  */
 
 public class Scrittore implements Runnable{
